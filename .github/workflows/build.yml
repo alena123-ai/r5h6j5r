@@ -82,10 +82,14 @@ jobs:
         zipStorePath=wrapper/dists
         EOF
 
-    - name: Download gradlew script
+    - name: Download Gradle wrapper files
       run: |
+        mkdir -p gradle/wrapper
+        # Скачиваем официальный скрипт gradlew для Gradle 8.2
         curl -L -o gradlew https://raw.githubusercontent.com/gradle/gradle/v8.2.0/gradlew
         chmod +x gradlew
+        # Скачиваем сам gradle-wrapper.jar (код запуска Gradle)
+        curl -L -o gradle/wrapper/gradle-wrapper.jar https://raw.githubusercontent.com/gradle/gradle/v8.2.0/gradle/wrapper/gradle-wrapper.jar
 
     - name: Build Debug APK
       run: ./gradlew assembleDebug --no-daemon
